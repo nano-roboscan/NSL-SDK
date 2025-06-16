@@ -92,7 +92,7 @@ typedef struct ViewerInfo_
 		
 		//sprintf(ipAddress,"/dev/ttyLidar");
 		//sprintf(ipAddress,"\\\\.\\COM12");
-		sprintf(ipAddress,"192.168.0.220");
+		sprintf(ipAddress,"192.168.0.190");
 	}
 
 }VIEWER_INFO, *LP_VIEWER_INFO;
@@ -312,11 +312,16 @@ Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD)
 	int viewer_xpos = gtViewerInfo.mouseX;
 	int viewer_ypos = gtViewerInfo.usedPCL != 0 ? (distMat.rows+DISTANCE_INFO_HEIGHT-1)-gtViewerInfo.mouseY : gtViewerInfo.mouseY;
 	float textSize = 0.8f;
+	int xMin = ptNslPCD->roiXMin;
+	int yMin = ptNslPCD->roiYMin;
 	
 	if( (viewer_ypos >= 0 && viewer_ypos < ptNslPCD->height*VIEWER_SCALE_SIZE)){
 		// mouseXpos, mouseYpos
-		int xpos = viewer_xpos/VIEWER_SCALE_SIZE;
-		int ypos = viewer_ypos/VIEWER_SCALE_SIZE;
+		int xpos = viewer_xpos/VIEWER_SCALE_SIZE+xMin;
+		int ypos = viewer_ypos/VIEWER_SCALE_SIZE+yMin;
+		int xpos_click = viewer_xpos/VIEWER_SCALE_SIZE;
+		int ypos_click = viewer_ypos/VIEWER_SCALE_SIZE;
+
 		Mat infoImage(DISTANCE_INFO_HEIGHT, distMat.cols, CV_8UC3, Scalar(255, 255, 255));
 
 		line(distMat, Point(viewer_xpos-13, viewer_ypos), Point(viewer_xpos+13, viewer_ypos), Scalar(255, 255, 0), 2);
@@ -334,25 +339,25 @@ Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD)
 		if( distance2D > NSL_LIMIT_FOR_VALID_DATA ){
 
 			if( distance2D == NSL_ADC_OVERFLOW )
-				dist2D_caption = format("X:%d,Y:%d ADC_OVERFLOW", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d ADC_OVERFLOW", xpos_click, ypos_click);
 			else if( distance2D == NSL_SATURATION )
-				dist2D_caption = format("X:%d,Y:%d SATURATION", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d SATURATION", xpos_click, ypos_click);
 			else if( distance2D == NSL_BAD_PIXEL )
-				dist2D_caption = format("X:%d,Y:%d BAD_PIXEL", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d BAD_PIXEL", xpos_click, ypos_click);
 			else if( distance2D == NSL_INTERFERENCE )
-				dist2D_caption = format("X:%d,Y:%d INTERFERENCE", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d INTERFERENCE", xpos_click, ypos_click);
 			else if( distance2D == NSL_EDGE_DETECTED )
-				dist2D_caption = format("X:%d,Y:%d EDGE_FILTERED", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d EDGE_FILTERED", xpos_click, ypos_click);
 			else
-				dist2D_caption = format("X:%d,Y:%d LOW_AMPLITUDE", xpos, ypos);
+				dist2D_caption = format("X:%d,Y:%d LOW_AMPLITUDE", xpos_click, ypos_click);
 		}
 		else{
 			if( ptNslPCD->operationMode == OPERATION_MODE_OPTIONS::DISTANCE_AMPLITUDE_MODE || ptNslPCD->operationMode == OPERATION_MODE_OPTIONS::RGB_DISTANCE_AMPLITUDE_MODE ) {
-				dist2D_caption = format("2D X:%d Y:%d %dmm/%dlsb", xpos, ypos, ptNslPCD->distance2D[ypos][xpos], ptNslPCD->amplitude[ypos][xpos]);
+				dist2D_caption = format("2D X:%d Y:%d %dmm/%dlsb", xpos_click, ypos_click, ptNslPCD->distance2D[ypos][xpos], ptNslPCD->amplitude[ypos][xpos]);
 				dist3D_caption = format("3D X:%.1fmm Y:%.1fmm Z:%.1fmm", ptNslPCD->distance3D[OUT_X][ypos][xpos], ptNslPCD->distance3D[OUT_Y][ypos][xpos], ptNslPCD->distance3D[OUT_Z][ypos][xpos]);
 			}
 			else{
-				dist2D_caption = format("2D X:%d Y:%d <%d>mm", xpos, ypos, ptNslPCD->distance2D[ypos][xpos]);
+				dist2D_caption = format("2D X:%d Y:%d <%d>mm", xpos_click, ypos_click, ptNslPCD->distance2D[ypos][xpos]);
 				dist3D_caption = format("3D X:%.1fmm Y:%.1fmm Z:%.1fmm", ptNslPCD->distance3D[OUT_X][ypos][xpos], ptNslPCD->distance3D[OUT_Y][ypos][xpos], ptNslPCD->distance3D[OUT_Z][ypos][xpos]);
 			}
 		}
