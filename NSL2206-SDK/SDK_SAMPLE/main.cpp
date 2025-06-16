@@ -273,7 +273,7 @@ void timeCheckThread(int void_data)
  * 
  * @return cv::Mat 
  */
-Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD)
+Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD, int lidarWidth, int lidarHeight)
 {
 	int width = ptNslPCD->width;
 	int height = ptNslPCD->height;
@@ -285,15 +285,15 @@ Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD)
 	int xpos = viewer_xpos/VIEWER_SCALE_SIZE;
 	int ypos = viewer_ypos/VIEWER_SCALE_SIZE;
 
-	if( (ypos >= yMin && ypos < NSL_LIDAR_HEIGHT)){
+	if( (ypos >= yMin && ypos < lidarHeight)){
 		
 		Mat infoImage(DISTANCE_INFO_HEIGHT, distMat.cols, CV_8UC3, Scalar(255, 255, 255));
 
 		line(distMat, Point(viewer_xpos-10, viewer_ypos), Point(viewer_xpos+10, viewer_ypos), Scalar(255, 255, 0), 2);
 		line(distMat, Point(viewer_xpos, viewer_ypos-10), Point(viewer_xpos, viewer_ypos+10), Scalar(255, 255, 0), 2);
 
-		if( xpos >= NSL_LIDAR_WIDTH ){ 
-			xpos -= NSL_LIDAR_WIDTH;
+		if( xpos >= lidarWidth ){ 
+			xpos -= lidarWidth;
 		}
 
 		string dist2D_caption;
@@ -451,7 +451,7 @@ void processPointCloud(NslPCD *ptNslPCD)
 		}
 
 		cv::resize( imageDistance, imageDistance, cv::Size( distanceWidth, distanceHeight ), 0, 0, INTER_LINEAR );
-		imageDistance = addDistanceInfo(imageDistance, ptNslPCD);
+		imageDistance = addDistanceInfo(imageDistance, ptNslPCD, NSL_LIDAR_WIDTH, NSL_LIDAR_HEIGHT);
 	
 #ifdef __USED_PCL_LIBLARY__
 		drawPointCloud(imageDistance);
