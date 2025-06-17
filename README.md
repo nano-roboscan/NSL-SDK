@@ -9,8 +9,8 @@ NSL2206-SDK와 NSL3140-SDK library입니다.
 ## USB 인식용 rules 정의
 ```
 $ sudo vi /etc/udev/rules.d/defined_lidar.rules
-KERNEL=="ttyACM*", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0094", MODE:="0777",SYMLINK+="ttyLidar"
-KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE:="0777",SYMLINK+="ttyLidar"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0094", MODE:="0777",SYMLINK+="ttyLidar2206"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE:="0777",SYMLINK+="ttyLidar3140"
 
 $ service udev reload
 $ service udev restart
