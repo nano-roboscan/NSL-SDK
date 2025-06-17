@@ -77,7 +77,7 @@ typedef struct ViewerInfo_
 		nslConfig.lidarAngleH = 0;
 		nslConfig.lidarAngleV = 0;
 		
-		sprintf(portName,"/dev/ttyLidar");
+		sprintf(portName,"/dev/ttyNsl2206");
 	}
 
 }VIEWER_INFO, *LP_VIEWER_INFO;
@@ -485,7 +485,7 @@ void nslQueueThread(int void_data)
 	sudo apt-get install libpcl-dev(1.8.1)
 
 	$ sudo vi /etc/udev/rules.d/defined_lidar.rules
-	KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE:="0777",SYMLINK+="ttyLidar"
+	KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE:="0777",SYMLINK+="ttyNsl2206"
 	
 	$ service udev reload
 	$ service udev restart
