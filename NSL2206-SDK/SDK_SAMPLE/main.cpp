@@ -558,9 +558,8 @@ int main()
 	printConfiguration();	
 #endif
 
-
- 	nsl_streamingOn(gtViewerInfo.handle, OPERATION_MODE_OPTIONS::DISTANCE_AMPLITUDE_MODE);
-//	nsl_streamingOn(gtViewerInfo.handle, OPERATION_MODE_OPTIONS::DISTANCE_MODE);
+// 	nsl_streamingOn(gtViewerInfo.handle, OPERATION_MODE_OPTIONS::DISTANCE_AMPLITUDE_MODE);
+	nsl_streamingOn(gtViewerInfo.handle, OPERATION_MODE_OPTIONS::DISTANCE_MODE);
 
 	thread queueThread = thread(nslQueueThread, 0);
 	std::unique_ptr<NslPCD> frameToProcess;
