@@ -53,7 +53,6 @@ typedef struct ViewerInfo_
 	int 	mainRunning;
 	int		mouseX;
 	int		mouseY;
-	int		usedPCL;
 	int 	frameCount;
 	int 	drawframeCount;
 	char 	ipAddress[20];
@@ -164,21 +163,6 @@ void onKeyboardEvent(const pcl::visualization::KeyboardEvent& event, void* viewe
     }
 }
 
-
-void mouseCallback(const pcl::visualization::MouseEvent& event, void* viewer_void)
-{
-    if (event.getType() == pcl::visualization::MouseEvent::MouseButtonRelease)
-    {
-        gtViewerInfo.mouseX = event.getX();
-		gtViewerInfo.mouseY = event.getY();
-		gtViewerInfo.usedPCL = 1;
-    }
-    else if (event.getType() == pcl::visualization::MouseEvent::MouseMove)
-    {
-		//cout << "마우스 이동: (" << event.getX() << ", " << event.getY() << ")" << endl;
-    }
-}
-
 void drawPointCloud(Mat imageDistance)
 {
 	pcl::visualization::PCLVisualizer::Ptr viewer = gtViewerInfo.viewers[0];
@@ -199,7 +183,6 @@ void mouseCallbackCV(int event, int x, int y, int flags, void* user_data)
     {
         gtViewerInfo.mouseX = x;
 		gtViewerInfo.mouseY = y;
-		gtViewerInfo.usedPCL = 0;
     }
 }
 
@@ -312,7 +295,7 @@ Mat addDistanceInfo(Mat distMat, NslPCD *ptNslPCD, int lidarWidth, int lidarHeig
 	int width = ptNslPCD->width;
 	int height = ptNslPCD->height;
 	int viewer_xpos = gtViewerInfo.mouseX;
-	int viewer_ypos = gtViewerInfo.usedPCL != 0 ? (distMat.rows+DISTANCE_INFO_HEIGHT-1)-gtViewerInfo.mouseY : gtViewerInfo.mouseY;
+	int viewer_ypos = gtViewerInfo.mouseY;
 	float textSize = 0.8f;
 	int xMin = ptNslPCD->roiXMin;
 	int yMin = ptNslPCD->roiYMin;
