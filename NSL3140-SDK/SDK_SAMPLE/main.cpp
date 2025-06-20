@@ -91,7 +91,7 @@ typedef struct ViewerInfo_
 		
 		//sprintf(ipAddress,"/dev/ttyNsl3140");
 		//sprintf(ipAddress,"\\\\.\\COM12");
-		sprintf(ipAddress,"192.168.0.190");
+		sprintf(ipAddress,"192.168.0.220");
 	}
 
 }VIEWER_INFO, *LP_VIEWER_INFO;

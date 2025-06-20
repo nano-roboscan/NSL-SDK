@@ -1,13 +1,11 @@
 #ifndef __NANOLIB_H__
 #define __NANOLIB_H__
 
-#ifdef NSLTOF_SHARED // shared library
-#ifdef NSLTOF_DLL_EXPORTS
-#define NSLTOF_API __declspec(dllexport)
-#else
+#ifdef NSLTOF_SHARED // windows & shared library
+#ifndef NSLTOF_API
 #define NSLTOF_API __declspec(dllimport)
 #endif
-#else // static library
+#else // static library or linux
 #define NSLTOF_API
 #endif
 
