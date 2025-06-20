@@ -91,7 +91,7 @@ typedef struct ViewerInfo_
 		
 		//sprintf(ipAddress,"/dev/ttyNsl3140");
 		//sprintf(ipAddress,"\\\\.\\COM12");
-		sprintf(ipAddress,"192.168.0.220");
+		sprintf(ipAddress,"192.168.0.190");
 	}
 
 }VIEWER_INFO, *LP_VIEWER_INFO;
@@ -638,7 +638,7 @@ int main()
 	timeThread = thread(timeCheckThread, 0);
 
 	gtViewerInfo.nslConfig.lidarAngle = 0;
-	gtViewerInfo.nslConfig.lensType = NslOption::LENS_TYPE::LENS_WF;
+	gtViewerInfo.nslConfig.lensType = NslOption::LENS_TYPE::LENS_SF;
 	gtViewerInfo.handle = nsl_open(gtViewerInfo.ipAddress, &gtViewerInfo.nslConfig, FUNCTION_OPTIONS::FUNC_ON);
 	if( gtViewerInfo.handle < 0 ){
 		printf("nsl_open::handle open error::%d\n", gtViewerInfo.handle);

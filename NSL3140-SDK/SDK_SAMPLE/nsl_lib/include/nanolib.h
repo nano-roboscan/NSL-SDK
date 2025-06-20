@@ -1,6 +1,16 @@
 #ifndef __NANOLIB_H__
 #define __NANOLIB_H__
 
+#ifdef NSLTOF_SHARED // shared library
+#ifdef NSLTOF_DLL_EXPORTS
+#define NSLTOF_API __declspec(dllexport)
+#else
+#define NSLTOF_API __declspec(dllimport)
+#endif
+#else // static library
+#define NSLTOF_API
+#endif
+
 #include <vector>
 
 #define NSL_MAX_HANDLE_SIZE			10
@@ -480,7 +490,7 @@ typedef struct NslPCD_{
  * 
  * @return created handle value
  */
-int nsl_open(const char *ipaddr, NslConfig *ptNslConfig, NslOption::FUNCTION_OPTIONS enabledDebug = NslOption::FUNCTION_OPTIONS::FUNC_OFF);
+NSLTOF_API int nsl_open(const char *ipaddr, NslConfig *ptNslConfig, NslOption::FUNCTION_OPTIONS enabledDebug = NslOption::FUNCTION_OPTIONS::FUNC_OFF);
 
 
 /**
@@ -490,7 +500,7 @@ int nsl_open(const char *ipaddr, NslConfig *ptNslConfig, NslOption::FUNCTION_OPT
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_closeHandle(int handle);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_closeHandle(int handle);
 
 
 /**
@@ -498,7 +508,7 @@ NslOption::NSL_ERROR_TYPE nsl_closeHandle(int handle);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_close();
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_close();
 
 
 /**
@@ -509,7 +519,7 @@ NslOption::NSL_ERROR_TYPE nsl_close();
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_streamingOn(int handle, NslOption::OPERATION_MODE_OPTIONS type);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_streamingOn(int handle, NslOption::OPERATION_MODE_OPTIONS type);
 
 
 /**
@@ -519,7 +529,7 @@ NslOption::NSL_ERROR_TYPE nsl_streamingOn(int handle, NslOption::OPERATION_MODE_
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_streamingOff(int handle);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_streamingOff(int handle);
 
 
 
@@ -531,7 +541,7 @@ NslOption::NSL_ERROR_TYPE nsl_streamingOff(int handle);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getFrame(int handle, NslFrame *frame, int waitTimeMs = 0);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getFrame(int handle, NslFrame *frame, int waitTimeMs = 0);
 
 
 
@@ -543,7 +553,7 @@ NslOption::NSL_ERROR_TYPE nsl_getFrame(int handle, NslFrame *frame, int waitTime
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_freeFrame(int handle, NslFrame *frame);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_freeFrame(int handle, NslFrame *frame);
 
 
 
@@ -555,7 +565,7 @@ NslOption::NSL_ERROR_TYPE nsl_freeFrame(int handle, NslFrame *frame);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getPointCloudData(int handle, NslPCD *pcdData, int waitTimeMs = 0);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getPointCloudData(int handle, NslPCD *pcdData, int waitTimeMs = 0);
 
 
 /**
@@ -566,7 +576,7 @@ NslOption::NSL_ERROR_TYPE nsl_getPointCloudData(int handle, NslPCD *pcdData, int
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setFrameRate(int handle, NslOption::FRAME_RATE_OPTIONS rate);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setFrameRate(int handle, NslOption::FRAME_RATE_OPTIONS rate);
 
 
 /**
@@ -577,7 +587,7 @@ NslOption::NSL_ERROR_TYPE nsl_setFrameRate(int handle, NslOption::FRAME_RATE_OPT
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getFrameRate(int handle, NslOption::FRAME_RATE_OPTIONS *rate);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getFrameRate(int handle, NslOption::FRAME_RATE_OPTIONS *rate);
 
 
 /**
@@ -588,7 +598,7 @@ NslOption::NSL_ERROR_TYPE nsl_getFrameRate(int handle, NslOption::FRAME_RATE_OPT
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIONS speed);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIONS speed);
 
 
 /**
@@ -599,7 +609,7 @@ NslOption::NSL_ERROR_TYPE nsl_setUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIO
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIONS *speed);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIONS *speed);
 
 
 /**
@@ -610,7 +620,7 @@ NslOption::NSL_ERROR_TYPE nsl_getUdpSpeed(int handle, NslOption::UDP_SPEED_OPTIO
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setMinAmplitude(int handle, int minAmplitude);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setMinAmplitude(int handle, int minAmplitude);
 
 /**
  * @brief read the minimum amplitude of the lidar.
@@ -620,7 +630,7 @@ NslOption::NSL_ERROR_TYPE nsl_setMinAmplitude(int handle, int minAmplitude);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getMinAmplitude(int handle, int *minAmplitude);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getMinAmplitude(int handle, int *minAmplitude);
 
 
 /**
@@ -634,7 +644,7 @@ NslOption::NSL_ERROR_TYPE nsl_getMinAmplitude(int handle, int *minAmplitude);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setIntegrationTime(int handle, int intTime, int intTimeHdr1, int intTimeHdr2, int intGray);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setIntegrationTime(int handle, int intTime, int intTimeHdr1, int intTimeHdr2, int intGray);
 
 
 /**
@@ -648,7 +658,7 @@ NslOption::NSL_ERROR_TYPE nsl_setIntegrationTime(int handle, int intTime, int in
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getIntegrationTime(int handle, int *intTime, int *intTimeHdr1, int *intTimeHdr2, int *intGray);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getIntegrationTime(int handle, int *intTime, int *intTimeHdr1, int *intTimeHdr2, int *intGray);
 
 
 /**
@@ -659,7 +669,7 @@ NslOption::NSL_ERROR_TYPE nsl_getIntegrationTime(int handle, int *intTime, int *
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setHdrMode(int handle, NslOption::HDR_OPTIONS mode);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setHdrMode(int handle, NslOption::HDR_OPTIONS mode);
 
 
 /**
@@ -670,7 +680,7 @@ NslOption::NSL_ERROR_TYPE nsl_setHdrMode(int handle, NslOption::HDR_OPTIONS mode
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getHdrMode(int handle, NslOption::HDR_OPTIONS *mode);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getHdrMode(int handle, NslOption::HDR_OPTIONS *mode);
 
 
 /**
@@ -681,7 +691,7 @@ NslOption::NSL_ERROR_TYPE nsl_getHdrMode(int handle, NslOption::HDR_OPTIONS *mod
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setGrayscaleillumination(int handle, NslOption::FUNCTION_OPTIONS OnOff);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setGrayscaleillumination(int handle, NslOption::FUNCTION_OPTIONS OnOff);
 
 
 /**
@@ -692,7 +702,7 @@ NslOption::NSL_ERROR_TYPE nsl_setGrayscaleillumination(int handle, NslOption::FU
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getGrayscaleillumination(int handle, NslOption::FUNCTION_OPTIONS *OnOff);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getGrayscaleillumination(int handle, NslOption::FUNCTION_OPTIONS *OnOff);
 
 
 /**
@@ -704,7 +714,7 @@ NslOption::NSL_ERROR_TYPE nsl_getGrayscaleillumination(int handle, NslOption::FU
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setAdcOverflowSaturation(int handle, NslOption::FUNCTION_OPTIONS enableOverFlow, NslOption::FUNCTION_OPTIONS enableSaturation);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setAdcOverflowSaturation(int handle, NslOption::FUNCTION_OPTIONS enableOverFlow, NslOption::FUNCTION_OPTIONS enableSaturation);
 
 
 /**
@@ -716,7 +726,7 @@ NslOption::NSL_ERROR_TYPE nsl_setAdcOverflowSaturation(int handle, NslOption::FU
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getAdcOverflowSaturation(int handle, NslOption::FUNCTION_OPTIONS *enableOverFlow, NslOption::FUNCTION_OPTIONS *enableSaturation);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getAdcOverflowSaturation(int handle, NslOption::FUNCTION_OPTIONS *enableOverFlow, NslOption::FUNCTION_OPTIONS *enableSaturation);
 
 
 /**
@@ -728,7 +738,7 @@ NslOption::NSL_ERROR_TYPE nsl_getAdcOverflowSaturation(int handle, NslOption::FU
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setDualBeam(int handle, NslOption::DUALBEAM_MOD_OPTIONS dualModulation, NslOption::DUALBEAM_OPERATION_OPTIONS dualOption);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setDualBeam(int handle, NslOption::DUALBEAM_MOD_OPTIONS dualModulation, NslOption::DUALBEAM_OPERATION_OPTIONS dualOption);
 
 
 /**
@@ -740,7 +750,7 @@ NslOption::NSL_ERROR_TYPE nsl_setDualBeam(int handle, NslOption::DUALBEAM_MOD_OP
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getDualBeam(int handle, NslOption::DUALBEAM_MOD_OPTIONS *dualModulation, NslOption::DUALBEAM_OPERATION_OPTIONS *dualOption);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getDualBeam(int handle, NslOption::DUALBEAM_MOD_OPTIONS *dualModulation, NslOption::DUALBEAM_OPERATION_OPTIONS *dualOption);
 
 
 /**
@@ -753,7 +763,7 @@ NslOption::NSL_ERROR_TYPE nsl_getDualBeam(int handle, NslOption::DUALBEAM_MOD_OP
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setModulation(int handle, NslOption::MODULATION_OPTIONS modulation, NslOption::MODULATION_CH_OPTIONS ch, NslOption::FUNCTION_OPTIONS enableAutoChannel);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setModulation(int handle, NslOption::MODULATION_OPTIONS modulation, NslOption::MODULATION_CH_OPTIONS ch, NslOption::FUNCTION_OPTIONS enableAutoChannel);
 
 
 /**
@@ -766,7 +776,7 @@ NslOption::NSL_ERROR_TYPE nsl_setModulation(int handle, NslOption::MODULATION_OP
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getModulation(int handle, NslOption::MODULATION_OPTIONS *modulation, NslOption::MODULATION_CH_OPTIONS *ch, NslOption::FUNCTION_OPTIONS *enableAutoChannel);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getModulation(int handle, NslOption::MODULATION_OPTIONS *modulation, NslOption::MODULATION_CH_OPTIONS *ch, NslOption::FUNCTION_OPTIONS *enableAutoChannel);
 
 
 /**
@@ -783,7 +793,7 @@ NslOption::NSL_ERROR_TYPE nsl_getModulation(int handle, NslOption::MODULATION_OP
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setFilter(int handle, NslOption::FUNCTION_OPTIONS enableMedian, NslOption::FUNCTION_OPTIONS enableGauss, int temporalFactor, int temporalThreshold, int edgeThreshold, int interferenceDetectionLimit, NslOption::FUNCTION_OPTIONS enableInterferenceDetectionLastValue);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setFilter(int handle, NslOption::FUNCTION_OPTIONS enableMedian, NslOption::FUNCTION_OPTIONS enableGauss, int temporalFactor, int temporalThreshold, int edgeThreshold, int interferenceDetectionLimit, NslOption::FUNCTION_OPTIONS enableInterferenceDetectionLastValue);
 
 
 /**
@@ -800,7 +810,7 @@ NslOption::NSL_ERROR_TYPE nsl_setFilter(int handle, NslOption::FUNCTION_OPTIONS 
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getFilter(int handle, NslOption::FUNCTION_OPTIONS *enableMedian, NslOption::FUNCTION_OPTIONS *enableGauss, int *temporalFactor, int *temporalThreshold, int *edgeThreshold, int *interferenceDetectionLimit, NslOption::FUNCTION_OPTIONS *enableInterferenceDetectionLastValue);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getFilter(int handle, NslOption::FUNCTION_OPTIONS *enableMedian, NslOption::FUNCTION_OPTIONS *enableGauss, int *temporalFactor, int *temporalThreshold, int *edgeThreshold, int *interferenceDetectionLimit, NslOption::FUNCTION_OPTIONS *enableInterferenceDetectionLastValue);
 
 
 /**
@@ -812,7 +822,7 @@ NslOption::NSL_ERROR_TYPE nsl_getFilter(int handle, NslOption::FUNCTION_OPTIONS 
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setBinning(int handle, NslOption::FUNCTION_OPTIONS vertical, NslOption::FUNCTION_OPTIONS horizontal);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setBinning(int handle, NslOption::FUNCTION_OPTIONS vertical, NslOption::FUNCTION_OPTIONS horizontal);
 
 
 /**
@@ -824,7 +834,7 @@ NslOption::NSL_ERROR_TYPE nsl_setBinning(int handle, NslOption::FUNCTION_OPTIONS
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getBinning(int handle, NslOption::FUNCTION_OPTIONS *vertical, NslOption::FUNCTION_OPTIONS *horizontal);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getBinning(int handle, NslOption::FUNCTION_OPTIONS *vertical, NslOption::FUNCTION_OPTIONS *horizontal);
 
 
 /**
@@ -840,7 +850,7 @@ NslOption::NSL_ERROR_TYPE nsl_getBinning(int handle, NslOption::FUNCTION_OPTIONS
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setRoi(int handle, int minX, int minY, int maxX, int maxY);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setRoi(int handle, int minX, int minY, int maxX, int maxY);
 
 
 /**
@@ -856,7 +866,7 @@ NslOption::NSL_ERROR_TYPE nsl_setRoi(int handle, int minX, int minY, int maxX, i
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getRoi(int handle, int *minX, int *minY, int *maxX, int *maxY);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getRoi(int handle, int *minX, int *minY, int *maxX, int *maxY);
 
 
 /**
@@ -870,7 +880,7 @@ NslOption::NSL_ERROR_TYPE nsl_getRoi(int handle, int *minX, int *minY, int *maxX
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setCorrection(int handle, NslOption::FUNCTION_OPTIONS drnu, NslOption::FUNCTION_OPTIONS temperature, NslOption::FUNCTION_OPTIONS grayscale, NslOption::FUNCTION_OPTIONS ambientlight);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setCorrection(int handle, NslOption::FUNCTION_OPTIONS drnu, NslOption::FUNCTION_OPTIONS temperature, NslOption::FUNCTION_OPTIONS grayscale, NslOption::FUNCTION_OPTIONS ambientlight);
 
 
 /**
@@ -884,7 +894,7 @@ NslOption::NSL_ERROR_TYPE nsl_setCorrection(int handle, NslOption::FUNCTION_OPTI
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getCorrection(int handle, NslOption::FUNCTION_OPTIONS *drnu, NslOption::FUNCTION_OPTIONS *temperature, NslOption::FUNCTION_OPTIONS *grayscale, NslOption::FUNCTION_OPTIONS *ambientlight);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getCorrection(int handle, NslOption::FUNCTION_OPTIONS *drnu, NslOption::FUNCTION_OPTIONS *temperature, NslOption::FUNCTION_OPTIONS *grayscale, NslOption::FUNCTION_OPTIONS *ambientlight);
 
 
 /**
@@ -897,7 +907,7 @@ NslOption::NSL_ERROR_TYPE nsl_getCorrection(int handle, NslOption::FUNCTION_OPTI
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_setIpAddress(int handle, const char *ipAddress, const char *netMask, const char *gateWay);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_setIpAddress(int handle, const char *ipAddress, const char *netMask, const char *gateWay);
 
 
 /**
@@ -910,7 +920,7 @@ NslOption::NSL_ERROR_TYPE nsl_setIpAddress(int handle, const char *ipAddress, co
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getIpAddress(int handle, char *ipAddress, char *netMask, char *gateWay);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getIpAddress(int handle, char *ipAddress, char *netMask, char *gateWay);
 
 
 /**
@@ -920,7 +930,7 @@ NslOption::NSL_ERROR_TYPE nsl_getIpAddress(int handle, char *ipAddress, char *ne
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_saveConfiguration(int handle);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_saveConfiguration(int handle);
 
 
 /**
@@ -931,7 +941,7 @@ NslOption::NSL_ERROR_TYPE nsl_saveConfiguration(int handle);
  * 
  * @return NSL_ERROR_TYPE 
  */
-NslOption::NSL_ERROR_TYPE nsl_getCurrentConfig(int handle, NslConfig *ptNslConfig);
+NSLTOF_API NslOption::NSL_ERROR_TYPE nsl_getCurrentConfig(int handle, NslConfig *ptNslConfig);
 
 
 /******************* 3D Point Cloud SDK *****************************/
@@ -950,7 +960,7 @@ NslOption::NSL_ERROR_TYPE nsl_getCurrentConfig(int handle, NslConfig *ptNslConfi
  * 
  * @return void 
  */
-void nsl_transformPixel(unsigned int srcX, unsigned int srcY, double srcZ, double *destX, double *destY, double *destZ);
+NSLTOF_API void nsl_transformPixel(unsigned int srcX, unsigned int srcY, double srcZ, double *destX, double *destY, double *destZ);
 
 /**
  * @brief Sets the 2D color of distance and amplitude.
@@ -961,7 +971,7 @@ void nsl_transformPixel(unsigned int srcX, unsigned int srcY, double srcZ, doubl
  * 
  * @return void 
  */
-void nsl_setColorRange(int maxDistance, int maxGrayScale, NslOption::FUNCTION_OPTIONS isGrayscale);
+NSLTOF_API void nsl_setColorRange(int maxDistance, int maxGrayScale, NslOption::FUNCTION_OPTIONS isGrayscale);
 
 /**
  * @brief Returns the distance color by distance.
@@ -970,7 +980,7 @@ void nsl_setColorRange(int maxDistance, int maxGrayScale, NslOption::FUNCTION_OP
  * 
  * @return NslVec3b 
  */
-NslOption::NslVec3b nsl_getDistanceColor(int value);
+NSLTOF_API NslOption::NslVec3b nsl_getDistanceColor(int value);
 
 
 /**
@@ -980,7 +990,7 @@ NslOption::NslVec3b nsl_getDistanceColor(int value);
  * 
  * @return NslVec3b 
  */
-NslOption::NslVec3b nsl_getAmplitudeColor(int value);
+NSLTOF_API NslOption::NslVec3b nsl_getAmplitudeColor(int value);
 
 #if defined(__cplusplus)
 //}
