@@ -773,13 +773,13 @@ NslOption::NSL_ERROR_TYPE nsl_getModulation(int handle, NslOption::MODULATION_OP
  * @brief Sets the filter of the lidar.
  * 
  * @param handle : handle value by nsl_open()
- * @param enableMedian : 0, 1 < 0 : off, 1 : enable median filter> 
- * @param enableGauss : 0, 1 < 0 : off, 1 : enable gauss filter> 
- * @param temporalFactor : 0 ~ 1000 <0, 1000 : off, 1 ~ 999 temporal factor value>
- * @param temporalThreshold : 0 ~ 1000 <0, 1000 : off, 1 ~ 999 temporal factor value>
- * @param edgeThreshold : 0 ~ 5000 <0 : off, 1 ~ 5000 : edge threshold value>
- * @param interferenceDetectionLimit : 0 ~ 1000 <0 : off, 1 ~ 1000 : interference detection limit value>
- * @param enableInterferenceDetectionLastValue : 0, 1 < 0 : off, 1 : used last value>
+ * @param *enableMedian : 0, 1 < 0 : off, 1 : enable median filter> 
+ * @param *enableGauss : 0, 1 < 0 : off, 1 : enable gauss filter> 
+ * @param *temporalFactor : 0 ~ 1000 <0, 1000 : off, 1 ~ 999 temporal factor value>
+ * @param temporalThreshold : 0 ~ 1000 <0 : off, 1 ~ 1000 temporal factor value>
+ * @param *edgeThreshold : 0 ~ 5000 <0 : off, 1 ~ 5000 : edge threshold value>
+ * @param *interferenceDetectionLimit : 0 ~ 10000 <0 : off, 1 ~ 10000 : interference detection limit value>
+ * @param *enableInterferenceDetectionLastValue : 0, 1 < 0 : off, 1 : used last value>
  * 
  * @return NSL_ERROR_TYPE 
  */
@@ -793,9 +793,9 @@ NslOption::NSL_ERROR_TYPE nsl_setFilter(int handle, NslOption::FUNCTION_OPTIONS 
  * @param *enableMedian : 0, 1 < 0 : off, 1 : enable median filter> 
  * @param *enableGauss : 0, 1 < 0 : off, 1 : enable gauss filter> 
  * @param *temporalFactor : 0 ~ 1000 <0, 1000 : off, 1 ~ 999 temporal factor value>
- * @param *temporalThreshold : 0 ~ 1000 <0, 1000 : off, 1 ~ 999 temporal factor value>
+ * @param temporalThreshold : 0 ~ 1000 <0 : off, 1 ~ 1000 temporal factor value>
  * @param *edgeThreshold : 0 ~ 5000 <0 : off, 1 ~ 5000 : edge threshold value>
- * @param *interferenceDetectionLimit : 0 ~ 1000 <0 : off, 1 ~ 1000 : interference detection limit value>
+ * @param *interferenceDetectionLimit : 0 ~ 10000 <0 : off, 1 ~ 10000 : interference detection limit value>
  * @param *enableInterferenceDetectionLastValue : 0, 1 < 0 : off, 1 : used last value>
  * 
  * @return NSL_ERROR_TYPE 
@@ -833,10 +833,10 @@ NslOption::NSL_ERROR_TYPE nsl_getBinning(int handle, NslOption::FUNCTION_OPTIONS
  * Please refer to the NSL-3140AA GUI Application for further assistance.
  * 
  * @param handle : handle value by nsl_open()
- * @param minX : 0~124 <Can be set to multiples of 8>
+ * @param minX : 0~124(120) <Can be set to multiples of 4> (for NSL-3130CV, set to multiples of 8)
  * @param minY : 0~116 <Can be set to multiples of 2>
- * @param maxX : 131~319 <Can be set to multiples of 8>
- * @param maxY : 123~239 <Can be set to multiples of 2>
+ * @param maxX : 319~131(127) <Can be set to multiples of 4> (for NSL-3130CV, set to multiples of 8)
+ * @param maxY : 239~123 <Can be set to multiples of 2>
  * 
  * @return NSL_ERROR_TYPE 
  */
@@ -849,10 +849,10 @@ NslOption::NSL_ERROR_TYPE nsl_setRoi(int handle, int minX, int minY, int maxX, i
  * Please refer to the NSL-3140AA GUI Application for further assistance.
  * 
  * @param handle : handle value by nsl_open()
- * @param *minX : 0~124 <Can be set to multiples of 8>
+ * @param *minX : 0~124(120) <Can be set to multiples of 4> (for NSL-3130CV, set to multiples of 8)
  * @param *minY : 0~116 <Can be set to multiples of 2>
- * @param *maxX : 131~319 <Can be set to multiples of 8>
- * @param *maxY : 123~239 <Can be set to multiples of 2>
+ * @param *maxX : 319~131(127) <Can be set to multiples of 4> (for NSL-3130CV, set to multiples of 8)
+ * @param *maxY : 239~123 <Can be set to multiples of 2>
  * 
  * @return NSL_ERROR_TYPE 
  */

@@ -572,10 +572,10 @@ NslOption::NSL_ERROR_TYPE nsl_getFilter(int handle, NslOption::FUNCTION_OPTIONS 
  * Please refer to the NSL-3140AA GUI Application for further assistance.
  * 
  * @param handle : handle value by nsl_open()
- * @param minX : 0~124 <Can be set to multiples of 8>
- * @param minY : 0~116 <Can be set to multiples of 2>
- * @param maxX : 131~319 <Can be set to multiples of 8>
- * @param maxY : 123~239 <Can be set to multiples of 2>
+ * @param minX : 0~159 <Can be set to multiples of 4>
+ * @param minY : 0~59 <Can be set to multiples of 2>
+ * @param maxX : 159~5 <Can be set to multiples of 4>
+ * @param maxY : 59~3 <Can be set to multiples of 2>
  * 
  * @return NSL_ERROR_TYPE 
  */
@@ -588,10 +588,10 @@ NslOption::NSL_ERROR_TYPE nsl_setRoi(int handle, int minX, int minY, int maxX, i
  * Please refer to the NSL-3140AA GUI Application for further assistance.
  * 
  * @param handle : handle value by nsl_open()
- * @param *minX : 0~124 <Can be set to multiples of 8>
- * @param *minY : 0~116 <Can be set to multiples of 2>
- * @param *maxX : 131~319 <Can be set to multiples of 8>
- * @param *maxY : 123~239 <Can be set to multiples of 2>
+ * @param *minX : 0~159 <Can be set to multiples of 4>
+ * @param *minY : 0~59 <Can be set to multiples of 2>
+ * @param *maxX : 159~5 <Can be set to multiples of 4>
+ * @param *maxY : 59~3 <Can be set to multiples of 2>
  * 
  * @return NSL_ERROR_TYPE 
  */
